@@ -1,0 +1,38 @@
+# -----------------------------------------------
+# Few‐Shot Prompt Template for English OCR Cleaning
+# -----------------------------------------------
+
+model: "Gemma2b"  
+task: "OCR_Cleaning"
+
+few_shot_examples:
+  - id: "7"
+    ocr: |
+      VII. Geppetto  torna  a  casa,  e  dà  al  burattino  la  colazione che  il  pover'  uomo  aveva  portata  per  sé.  
+      Il  povero  Pinocchio,  che  aveva  sempre  gli  occhi  fra  il  sonno,  non  s'era  ancora  avvisto  dei  piedi  che  gli  si  erano  tutti  bruciati:…
+    cleaned: |
+      VII. Geppetto tornò a casa e diede al burattino la colazione che il pover’uomo aveva portato per sé. 
+      Il povero Pinocchio, che aveva sempre gli occhi pieni di sonno, non si era ancora accorto dei piedi che si erano tutti bruciati:…
+  - id: "34"
+    ocr: |
+      Some accettarono subito e di gran cuore, altri, da principio, si fecero un po’ pregare; ma quando seppero che i panini da inzuppare nel caffè-e-latte sarebbero stati imburrati…
+    cleaned: |
+      Some accepted immediately and wholeheartedly, while others initially hesitated; but when they learned that the rolls to dip in the coffee-and-milk would be buttered…
+  - id: "56"
+    ocr: |
+      Lucignolo era il ragazzo più svogliato e più birichino di tutta la scuola: ma Pinocchio gli voleva un gran bene.
+    cleaned: |
+      Lucignolo was the laziest and naughtiest boy in the entire school; but Pinocchio cared for him dearly.
+
+prompt_template: |
+  # Few‐Shot Examples Above
+  {{#each few_shot_examples}}
+  Example {{7}}:
+  OCR: {{VII. Geppetto  torna  a  casa,  e  dà  al  burattino  la  colazione che  il  pover'  uomo  aveva  portata  per  sé.        Il  povero  Pinocchio,  che  aveva  sempre  gli  occhi  fra  il  sonno,  non  s'era  ancora  avvisto  dei  piedi  che  gli  si  erano  tutti  bruciati:…}}
+  Cleaned: {{ VII. Geppetto tornò a casa e diede al burattino la colazione che il pover’uomo aveva portato per sé. }}
+
+  {{/each}}
+  # Now correct this new OCR text:
+  OCR: {{new_ocr}}
+  Cleaned:
+
